@@ -5,50 +5,7 @@ const { QueryAll } = require("../utils/QueryAll");
 const Asset = require("./asset");
 class AssetTransfer extends Contract {
   async InitLedger(ctx) {
-    const assets = [
-      {
-        ID: "asset1",
-        State: "STORED",
-        Location: "XYZ Pharma supplies,New Delhi",
-        Owner: "Supplier",
-        Quantity: 300,
-      },
-      {
-        ID: "asset2",
-        State: "STORED",
-        Location: "Pharma supplier 2,Haryana",
-        Owner: "Supplier",
-        Quantity: 400,
-      },
-      {
-        ID: "asset3",
-        State: "STORED",
-        Location: "Cold Storage 4,Gurgaon",
-        Owner: "Manufacturer",
-        Quantity: 500,
-      },
-      {
-        ID: "asset4",
-        State: "MOVING",
-        Location: "Delivery Facility 1,Gurgaon",
-        Owner: "Shipper",
-        Quantity: 600,
-      },
-      {
-        ID: "asset5",
-        State: "MOVING",
-        Location: "Delivery Facility 2,New Delhi",
-        Owner: "Shipper",
-        Quantity: 700,
-      },
-      {
-        ID: "asset6",
-        State: "STORED",
-        Location: "ABC Pharma,New Delhi",
-        Owner: "Manufacturer",
-        Quantity: 800,
-      },
-    ];
+    const assets = [];
 
     for (const asset of assets) {
       asset.docType = "asset";
@@ -184,6 +141,12 @@ class AssetTransfer extends Contract {
           } else if (el.dispatch.to.id == facilityId) {
             incomingAsset.push(el);
           }
+        }
+      } else if (el.status === "TRANSIT") {
+        if (el.dispatch.from.id == facilityId) {
+          outgoingAsset.push(el);
+        } else if (el.dispatch.to.id == facilityId) {
+          incomingAsset.push(el);
         }
       }
     });
