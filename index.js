@@ -49,6 +49,9 @@ app.post("/createAsset/:user", async (req, res) => {
   const id = uuidv4();
   let assetData = req.body;
   assetData.id = id;
+
+  //Check for user auth:Auth()
+
   console.log(assetData);
   try {
     const contract = await connectNetwork(ccp, req.params.user);
@@ -70,6 +73,9 @@ app.post("/createAsset/:user", async (req, res) => {
 
 app.post("/updateAsset/:user/:id", async (req, res) => {
   let assetData = req.body;
+
+  //Check for user auth:Auth()
+
   console.log(assetData);
   try {
     const contract = await connectNetwork(ccp, req.params.user);
@@ -90,6 +96,7 @@ app.post("/updateAsset/:user/:id", async (req, res) => {
 });
 
 app.post("/delete/:user/:id", async (req, res) => {
+  //Check for user auth:Auth()
   try {
     const contract = await connectNetwork(ccp, req.params.user);
     console.log(
@@ -105,6 +112,7 @@ app.post("/delete/:user/:id", async (req, res) => {
 });
 
 app.get("/getAssetById/:id/:user", async (req, res) => {
+  //Public endpoint : "/id/public user can be generated"
   try {
     const contract = await connectNetwork(ccp, req.params.user);
     console.log(
@@ -119,6 +127,7 @@ app.get("/getAssetById/:id/:user", async (req, res) => {
 });
 
 app.get("/getHistory/:id/:user", async (req, res) => {
+  //Public endpoint : "/id/public user can be generated"
   try {
     const contract = await connectNetwork(ccp, req.params.user);
     console.log(
@@ -133,6 +142,7 @@ app.get("/getHistory/:id/:user", async (req, res) => {
 });
 
 app.get("/getAll/:user", async (req, res) => {
+  //Check for user auth:Auth()
   try {
     const contract = await connectNetwork(ccp, req.params.user);
     console.log(
@@ -147,6 +157,7 @@ app.get("/getAll/:user", async (req, res) => {
 });
 
 app.get("/facilityData/:user", async (req, res) => {
+  //Check for user auth:Auth()
   try {
     const contract = await connectNetwork(ccp, req.params.user);
     let result = await contract.evaluateTransaction(
